@@ -13,6 +13,75 @@ code {
 }
 
 .App-container {
-  
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+     
+
+      .title {
+        text-align: center;
+        padding-top: 30px;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .text {
+          padding-bottom: 3px;
+          font-weight: 600;
+      }
+      
+      input { 
+          padding: 12px 8px; 
+          outline: none;
+          margin-top: 7px;
+          border:#1618230f;
+          background-color: #1618230f;
+          font-size: 14px;
+          border-radius: 3px;
+          width: 100%;
+
+          &:hover {
+            background-color: #dedede;
+          }
+      }
+
+      .input-eye {
+        position: relative;
+
+        i {
+          position: absolute;
+          top: 22px;
+          right: 6px;
+          cursor: pointer;
+        }
+      }
+
+      button {
+        margin-top: 15px;
+        padding: 10px;
+        outline: none;
+        border: none;
+        border-radius: 3px;
+
+        &.active {
+          background-color: red;
+          color: #fff;
+        }
+      }
+
+      .button[disabled=disabled], button:disabled {
+        cursor: not-allowed;
+      }
+
+      .back {
+        text-align: center;
+        padding-top: 30px;
+        cursor: pointer;
+       
+      }
+  }
 }
+
+
 

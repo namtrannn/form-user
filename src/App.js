@@ -4,10 +4,19 @@ import Home from './components/Home';
 import TableUser from './components/TableUser';
 import Container from 'react-bootstrap/Container';
 import { ToastContainer } from 'react-toastify';
-import { Routes, Route, Link } from "react-router-dom";
-
+import { Routes, Route } from "react-router-dom";
+import Login from './components/Login';
+import { useContext, useEffect } from 'react';
+import { UserContext } from './Context/UserContext';
 
 function App() {
+
+  const { user,loginContext } = useContext(UserContext)
+
+  useEffect(() => {
+    if(localStorage.getItem("token"))
+      loginContext(localStorage.getItem("token"),localStorage.getItem("email") )
+  },[])
 
   return (
     <>
@@ -17,6 +26,7 @@ function App() {
             <Routes >
               <Route path="/" element={<Home />}/>
               <Route path="/users" element={<TableUser />}/>
+              <Route path="/login" element={<Login />}/>
             </Routes>
         </Container>
       </div>

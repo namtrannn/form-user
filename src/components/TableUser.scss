@@ -9,7 +9,7 @@
   }
 
 .add-new {
-    display: flex;
+    //display: flex;
     align-items: center;
     justify-content: space-between;
 
@@ -23,3 +23,10 @@
     }
   }
   
+  .pagination {
+    justify-content: center;
+  }
+
+  .action-btn {
+    text-align: center;
+  }

@@ -19,7 +19,7 @@ const ModalEditUser = (props) => {
             handleClose()
             toast.success("Update User Seccess !")
         }   
-        console.log(res)
+        
     }
    
     useEffect(() => {

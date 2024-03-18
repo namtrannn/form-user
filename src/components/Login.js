@@ -1,50 +1,45 @@
-import { useEffect, useState , useContext } from "react"
-import { loginApi } from "../services/UserSevices"
+import { useEffect, useState } from "react"
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
-import { UserContext } from '../Context/UserContext';   
+import { handelLoginRedux } from "../Redux/Actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
 
-    const { loginContext } = useContext(UserContext)
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isShowPassword,setIsShowPassword] = useState(false)
-    const [loadingAPI, setLoadingAPI] = useState(false)
 
-    // disabled Login
-    // useEffect(() => {
-    //     let token = localStorage.getItem("token")
-    //     console.log(token)
-    //     if(token) {
-    //         navigate("/users")
-    //     }
-    // },[])
+    const isLoading = useSelector(state => state.user.isLoading) 
+    const account = useSelector(state => state.user.account) 
 
     const handelLoggin = async () => {
         if(!email || !password) {
             toast.error("Email/Password is requied !")  
             return
         }   
-        setLoadingAPI(true)
-        let res = await loginApi(email,password)
 
-        if( res && res.token) { 
-            loginContext(email, res.token)
-            navigate("/users")
-           
-        }else {
-            //err
-            toast.error(res.data.error)
-        }
-        setLoadingAPI(false)
+        dispatch(handelLoginRedux(email, password))
     }
 
     const handelGoback = () => {
         navigate("/")
     }
+
+    const handelPressEnter = (even) => {
+        if(even && even.code === 'Enter') {
+            handelLoggin()
+        }
+    }
+
+    useEffect(() => {
+        if(account && account.auth === true) {
+            navigate("/users")
+        }
+    },[account, navigate])
 
     return (<>
         <div className="login-container col-12 col-sm-4">
@@ -60,8 +55,9 @@ const Login = () => {
                         placeholder="password..."
                         value={password}
                         onChange={(even) => setPassword(even.target.value)}
+                        onKeyDown={(even) => handelPressEnter(even)}
                 />
-                <i  class={isShowPassword === true ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
+                <i  className={isShowPassword === true ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
                     onClick={() => setIsShowPassword(!isShowPassword)}
                 ></i>
             </div>
@@ -71,7 +67,7 @@ const Login = () => {
                 disabled={email && password ? false : true }
                 onClick={() => handelLoggin()}
             > 
-                {loadingAPI && <i className="fas fa-sync fa-spin"></i>} 
+                {isLoading && <i className="fas fa-sync fa-spin"></i>} 
                 &nbsp; Login
             </button>
             <div className="back">

@@ -6,19 +6,27 @@ import LogoApps from '../assets/img/chu-meo-may-doreamon-dang-bay-hinh-anh-png-6
 import Image from 'react-bootstrap/Image';
 import { NavLink,useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../Context/UserContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { handelLogoutRedux } from '../Redux/Actions/userAction';
+import {  useEffect } from 'react';
 
 const Header = (props) => {
 
-    const { user, logout } = useContext(UserContext)
 
     const navigate = useNavigate()
+    const user = useSelector(state => state.user.account)
+    const dispatch = useDispatch()
+
     const handelLogout = () => {
-        logout()
-        navigate("/login")
-        toast.success("Logout success")
+        dispatch(handelLogoutRedux()  ) 
     }
+
+    useEffect(() => {
+        if(user && user.auth === false && window.location.pathname !== '/login' ) {
+            navigate("/")
+            toast.success("Logout success")
+        }
+    },[user])
 
     return (
         <Navbar expand="lg" className="bg-light">

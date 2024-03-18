@@ -1,21 +1,20 @@
 import './App.scss';
 import Header from './components/Header'; 
-import Home from './components/Home';
-import TableUser from './components/TableUser';
-import Container from 'react-bootstrap/Container';
 import { ToastContainer } from 'react-toastify';
-import { Routes, Route } from "react-router-dom";
-import Login from './components/Login';
-import { useContext, useEffect } from 'react';
-import { UserContext } from './Context/UserContext';
+import Container from 'react-bootstrap/Container';
+import AppRoute from './Routes/AppRoute';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import {handelRefresh} from './Redux/Actions/userAction'
 
 function App() {
 
-  const { user,loginContext } = useContext(UserContext)
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if(localStorage.getItem("token"))
-      loginContext(localStorage.getItem("token"),localStorage.getItem("email") )
+    if(localStorage.getItem("token")) {
+      dispatch(handelRefresh())
+    }
   },[])
 
   return (
@@ -23,11 +22,7 @@ function App() {
       <div className="App-container">
         <Header />
         <Container>
-            <Routes >
-              <Route path="/" element={<Home />}/>
-              <Route path="/users" element={<TableUser />}/>
-              <Route path="/login" element={<Login />}/>
-            </Routes>
+            <AppRoute />
         </Container>
       </div>
 

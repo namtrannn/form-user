@@ -11,6 +11,7 @@ import './TableUser.scss'
 import { CSVLink } from "react-csv";
 import { toast } from 'react-toastify';
 import Papa from 'papaparse'
+
 const TableUser = (props) => {
 
     const [listUser,setListUser] = useState([])
@@ -166,9 +167,11 @@ const TableUser = (props) => {
     }
 
     return (<>
-    <div className='my-3 add-new'>     
+    <div className='my-3 add-new d-sm-flex'>     
         <span><b>List user:</b></span>
-        <div className='group-btns'>
+
+        <div className='group-btns mt-sm-0 mt-2'>
+            {/* --------------Import------------*/}
             <label htmlFor='import' className='btn btn-warning'>
                 <i className="fa-solid fa-file-import"></i>
                 Import
@@ -177,6 +180,8 @@ const TableUser = (props) => {
                 type='file' id='import' hidden
                 onChange = {(even) => handlImportFileCSV(even)}>
             </input>
+
+            {/* ---------------Eport ----------------*/}
             <CSVLink 
                 filename={"my-file.csv"}
                 className="btn btn-primary"
@@ -187,22 +192,27 @@ const TableUser = (props) => {
                 <i className="fa-solid fa-download"></i>
                 Export
             </CSVLink>  
-            <button type="button" class="btn btn-success"
+
+            {/* -----------------AddNew------------------ */}
+            <button type="button" className="btn btn-success"
                 onClick={() => setIsShowUserAddNew(true)}
             >   
                 <i className="fa-solid fa-circle-plus"></i>
                 Add new
             </button>
         </div>
-       
     </div>
-    <div className='col-6 my-3'>
+
+    {/* ---------form-control--------------- */}
+    <div className='col-12 col-sm-4 my-3'>
         <input 
             className='form-control' 
             placeholder='Search user by email...'
             onChange={(event) => handelSearch(event)}
         />
     </div>
+
+    {/* ----------Table user------------ */}
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -256,9 +266,9 @@ const TableUser = (props) => {
                         <td>{item.email}</td>
                         <td>{item.first_name}</td>
                         <td>{item.last_name}</td>
-                        <td>
+                        <td className='action-btn'>
                             <button 
-                                className='btn btn-warning mx-3'
+                                className='btn btn-warning mx-3 mb-1'
                                 onClick={() => handelEditUser(item)}
                             >Edit</button>
                             <button className='btn btn-danger'

@@ -17,11 +17,12 @@ const Login = () => {
     const account = useSelector(state => state.user.account) 
 
     const handelLoggin = async () => {
+        //Login Error
         if(!email || !password) {
             toast.error("Email/Password is requied !")  
             return
         }   
-
+        //Login Success
         dispatch(handelLoginRedux(email, password))
     }
 

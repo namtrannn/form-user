@@ -12,7 +12,9 @@ export const handelLoginRedux = (email, password) => {
     return async (dispatch, getState) => {
         dispatch({ type: FETCH_USER_LOGIN });
 
+        //Gui Y/C login
         let res = await loginApi(email.trim(), password)
+        
         //success
         if(res && res.token) {
 

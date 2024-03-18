@@ -29,14 +29,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 isLoading : true,
                 isError: false
             };
-       
-           case FETCH_USER_ERROR:
-            return {
-               ...state,
-               isLoading : false,
-               isError: true
-            };
-
+            
             case FETCH_USER_SUCCES:
                return {
                   ...state,
@@ -48,6 +41,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
                   isLoading : false,
                   isError: false
                };
+               
+           case FETCH_USER_ERROR:
+            return {
+               ...state,
+               isLoading : false,
+               isError: true
+            };
             
             case USER_LOGOUT:
                 localStorage.removeItem('email')
